@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   template: `
   <div class="container">
     <h1>My patient App</h1>
-    <h3 *ngFor="let currentPatient of patients">{{ currentPatient.description }}</h3>
+    <h3 (click)="doStuff()" *ngFor="let currentPatient of patients">{{ currentPatient.description }}</h3>
   </div>
   `
 })
@@ -23,11 +23,15 @@ new Patient("Itwaruichiu Ian.", 7),
 new Patient("Sam Mascot.", 8),
 new Patient("Rita Mumo.", 9),
 ];
+
+doStuff (){
+alert("you just clicked on a patient");
+}
+
 }
 
 
 export class Patient{
-public done: boolean = false;
  constructor(public description: string, public id: number) {   }
 
 }
