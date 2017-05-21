@@ -4,34 +4,49 @@ import { Component } from '@angular/core';
   selector: 'my-app',
   template: `
   <div class="container">
-    <h1>My patient App</h1>
-    <h3 (click)="doStuff()" *ngFor="let currentPatient of patients">{{ currentPatient.description }}</h3>
+    <h1>My Patient App</h1>
+    <div *ngFor="let currentPatient of patients">
+      <h3>{{ currentPatient.description }}</h3>
+      <button (click)="showDetails(currentPatient)">Edit</button>
+    </div>
+    <div *ngIf="selectedPatient">
+      <h1>Edit Patient</h1>
+      <div>
+        <label>Enter Patient Description:</label>
+        <input [(ngModel)]="selectedPatient.description">
+      </div>
+      <div>
+        <label>Enter Patient FirstName:</label>
+        <input [(ngModel)]="selectedPatient.firstname">
+        <button (click)="finishedEditing()">Done</button>
+      </div>
+      <div>
+        <label>Enter Patient LastName:</label>
+        <input [(ngModel)]="selectedPatient.lastname">
+        <button (click)="finishedEditing()">Done</button>
+      </div>
+    </div>
   </div>
   `
 })
-export class AppComponent{
-public patients : Patient[] =[
 
-new Patient("Ngigi Kahoto.", 0),
-new Patient("Lucy Muthoni.", 1),
-new Patient("Victor Aiti.", 2),
-new Patient("Moses Okemwa.", 3),
-new Patient("Sheilan Wairimu.", 4),
-new Patient("Kenyanjui Kenyanjui.", 5),
-new Patient("Betty Major.", 6),
-new Patient("Itwaruichiu Ian.", 7),
-new Patient("Sam Mascot.", 8),
-new Patient("Rita Mumo.", 9),
-];
-
-doStuff (){
-alert("you just clicked on a patient");
+export class AppComponent {
+  public patients: Patient[] = [
+      new Patient("Moses Okemwa", 0),
+      new Patient("Njeri Gitau", 1),
+      new Patient("Agnes Kariuki", 2),
+      new Patient("Randy Johnson", 3)
+  ];
+  selectedPatient: Patient = null;
+  showDetails(clickedPatient: Patient) {
+    this.selectedPatient = clickedPatient;
+  }
+  finishedEditing() {
+    this.selectedPatient = null;
+  }
 }
 
-}
-
-
-export class Patient{
- constructor(public description: string, public id: number) {   }
-
+export class Patient {
+  public done: boolean = false;
+  constructor(public description: string, public id: number) {   }
 }
