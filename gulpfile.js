@@ -21,6 +21,8 @@ var lib = require('bower-files')({
 var utilities = require('gulp-util');
 var buildProduction = utilities.env.production;
 var del = require('del');
+var jshint = require('gulp-jshint');
+
 
 // set up server with watchers and run typescript compiler in the shell.
 var browserSync = require('browser-sync').create();
@@ -101,6 +103,12 @@ gulp.task('jsBuild', function(){
 
 gulp.task('htmlBuild', function(){
   browserSync.reload();
+});
+
+gulp.task('jshint', function(){
+  return gulp.src(['js/*.js'])
+    .pipe(jshint())
+    .pipe(jshint.reporter('default'));
 });
 
 gulp.task('cssBuild', ['sassBuild'], function(){
